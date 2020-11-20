@@ -30,6 +30,10 @@ namespace EmployeeManager2.Controllers
         public ViewResult Index()
         {
             var model = _employeeRepository.GetAllEmployee();
+
+            var total = _employeeRepository.GetAllEmployee().Sum(s=>s.ReceiptAmount);
+
+            ViewBag.total = total.ToString();
             return View(model);
         }
 
@@ -99,6 +103,15 @@ namespace EmployeeManager2.Controllers
         {
             string from = HttpContext.Request.Query["from"].ToString();
             string to = HttpContext.Request.Query["to"].ToString();
+            string name = HttpContext.Request.Query["name"].ToString();
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                var model = _employeeRepository.SearchEmployee(name);
+                var total1 = _employeeRepository.SearchEmployee(name).Sum(s=>s.ReceiptAmount);
+
+                ViewBag.total = total1.ToString();
+                return View("Index", model);
+            }
             if (string.IsNullOrWhiteSpace(to))
             {
                 to = DateTime.Today.ToString("yyyy-MM-dd");
@@ -106,6 +119,9 @@ namespace EmployeeManager2.Controllers
                 if (!string.IsNullOrWhiteSpace(from))
             {
                 var model = _employeeRepository.SearchReceipt(from,to);
+                var total1 = _employeeRepository.SearchReceipt(from, to).Sum(s => s.ReceiptAmount);
+
+                ViewBag.total = total1.ToString();
                 return View("Index", model);
 
             }
