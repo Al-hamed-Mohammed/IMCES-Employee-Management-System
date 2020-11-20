@@ -11,12 +11,26 @@
     <a asp-action="Create">Create New</a>
 </p>
 
+
+
 <div class="form-group row">
 
-    <select id="ddllastname" class=" col-sm-2 form-control"
-            asp-items="@(new SelectList(ViewBag.Listofnames,"Value", "Text"))">
-    </select>
-    <label class="col-sm-1 col-form-label"> Search: </label>
+
+    <label class="col-sm-2 col-form-label"> Search By Last Name: </label>
+    <div class="col-sm-6">
+        <select id="ddllastname"
+                class=" form-control"
+                asp-items="@(new SelectList(ViewBag.Listofnames,"Value", "Text"))">
+        </select>
+
+    </div>
+</div>
+
+
+<div class="form-group row">
+
+   
+    <label class="col-sm-1 col-form-label"> Search By First Name: </label>
     <div class="col-sm-6">
         <input type="text" name="name" id="name" placeholder="Search by Name" class="form-control">
 
@@ -24,20 +38,20 @@
     @*<input type="submit" class="col-sm-1 btn btn-primary" id="btnnamesearch" value="Filter" onclick="location.href='@Url.Action("Search", "Home")?txt=' + $('#search').val()" />*@
 </div>
 <div class="form-group row">
-    <label class="col-sm-2 col-form-label"> Receipt Date (From) : </label>
+    <label class="col-sm-2 col-form-label"> Date (From) : </label>
     <div class="col-sm-3">
         <input type="date" asp-format="{0:MM-dd-yyyy}" name="fromdate" id="fromdate" placeholder="From Date" class="form-control">
     </div>
 
 </div>
 <div class="form-group row">
-    <label class="col-sm-2 col-form-label"> Receipt Date (To) : </label>
+    <label class="col-sm-2 col-form-label">  Date (To) : </label>
     <div class="col-sm-3">
         <input type="date" asp-format="{0:MM-dd-yyyy}" name="todate" id="todate" placeholder="To Date" class="form-control">
     </div>
 
     <input type="submit" class="col-sm-1 btn btn-primary" id="btndatesearch" value="Filter" onclick="location.href='@Url.Action("Search", "TimeSheet")?from=' + $('#fromdate').val() + '&to='+$('#todate').val() + '&byfirstname='+$('#name').val() + '&bylastname='+$('#ddllastname').val()  " />
-    <div class="col-sm-6">
+    <div class="col-sm-6" style="text-align:right;font-weight:bold">
         <label class=" col-sm-3 col-form-label"> Total Hours: </label>
 
         @Html.Label("Name", (string)ViewBag.total)
@@ -72,7 +86,7 @@
             foreach (var item in Model)
             {
                 <tr>
-                    
+
                     <td>
                         @Html.DisplayFor(modelItem => item.FirstName)
                     </td>
