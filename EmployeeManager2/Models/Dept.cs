@@ -8,7 +8,7 @@ namespace EmployeeManager2.Models
     public enum Dept
     {
         None,
-        HR,
+        Billing,
         IT,
         Payroll,
         Services

@@ -25,7 +25,7 @@ namespace EmployeeManager2.ViewModels
         public string Email { get; set; }
         [Required]
         public Dept? Department { get; set; }
-
+        [Required]
         public DateTime ReimburseDate { get; set; }
         [Required]
         public DateTime ReceiptDate { get; set; }

@@ -3,23 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EmployeeManager2.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeManager2.Controllers
 {
+    [Authorize]
     public class MileageController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly IHostingEnvironment hostingEnvironment;
 
-        public MileageController(AppDbContext context)
+        public MileageController(AppDbContext context, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
+            this.hostingEnvironment = hostingEnvironment;
         }
         public IActionResult Index()
         {
             return View();
+            
         }
         public IActionResult Privacy()
         {
