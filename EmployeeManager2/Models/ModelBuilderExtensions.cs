@@ -23,7 +23,7 @@ namespace EmployeeManager2.Models
                 {
                     Id = 2,
                     Name = "Denzel",
-                    Department = Dept.HR,
+                    Department = Dept.Billing,
                     Email = "Denzel@gmail.com"
                 }
            );
