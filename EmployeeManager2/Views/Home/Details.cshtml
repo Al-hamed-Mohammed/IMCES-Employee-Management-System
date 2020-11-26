@@ -4,6 +4,8 @@
 
     ViewBag.Title = "Employee Details";
     var photoPath = "~/Images/" + (Model.Employee.PhotoPath ?? "Publication1.jpg");
+
+   
 }
 
 <div class="row justify-content-center m-3">
@@ -18,8 +20,25 @@
                 <h4>Employee ID:  @Model.Employee.Id</h4>
                 <h4>Email:  @Model.Employee.Email</h4>
                 <h4>Department:  @Model.Employee.Department</h4>
-                <h4>Receipt Date:  @Model.Employee.ReceiptDate.ToString("MM-dd-yyyy") </h4>
-                <h4>Reimburse Date:  @Model.Employee.ReimburseDate.ToString("MM-dd-yyyy") </h4>
+                @if (Model.Employee.ReceiptDate.HasValue)
+                {
+                    <h4>Receipt Date:   @Model.Employee.ReceiptDate.Value.ToString("MM-dd-yyyy")</h4>
+                }
+                else
+                {
+                    <h4>Receipt Date:</h4>
+                }
+                @if (Model.Employee.ReimburseDate.HasValue)
+                {
+                    <h4>Reimburse Date:   @Model.Employee.ReimburseDate.Value.ToString("MM-dd-yyyy") </h4>
+                    
+                }
+                else
+                {
+                    <h4>Reimburse Date:</h4>
+                }
+
+
                 <h4>Receipt Amount:  @Model.Employee.ReceiptAmount </h4>
             </div>
             <div class="card-footer text-center">
