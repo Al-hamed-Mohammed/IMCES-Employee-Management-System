@@ -23,9 +23,8 @@ namespace EmployeeManager2.Models
         [Required]
         public Dept? Department { get; set; }
 
-        public DateTime ReimburseDate { get; set; }
-        [Required]
-        public DateTime ReceiptDate { get; set; }
+        public DateTime? ReimburseDate { get; set; }
+        public DateTime? ReceiptDate { get; set; }
 
         public string PhotoPath { get; set; }
 

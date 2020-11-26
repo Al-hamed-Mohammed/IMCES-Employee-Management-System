@@ -25,10 +25,8 @@ namespace EmployeeManager2.ViewModels
         public string Email { get; set; }
         [Required]
         public Dept? Department { get; set; }
-        [Required]
-        public DateTime ReimburseDate { get; set; }
-        [Required]
-        public DateTime ReceiptDate { get; set; }
+        public DateTime? ReimburseDate { get; set; }
+        public DateTime? ReceiptDate { get; set; }
         public List<IFormFile> Photos { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal ReceiptAmount { get; set; }
