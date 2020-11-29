@@ -27,7 +27,12 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary">Register</button>
+            <div class="form-group">
+                <label asp-for="Input.usercode" ></label>
+                <input asp-for="Input.usercode" id="txtusercode" class="form-control" />
+                <span asp-validation-for="Input.usercode" id="lblerorusercodemsg" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="usercodevalidations()" >Register</button>
         </form>
     </div>    
 </div>
@@ -35,3 +40,26 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+<script src="~/js/jquery.min.js"></script>
+
+<script>
+    function usercodevalidations() {
+        
+        var usercode = document.getElementById("txtusercode");
+     
+        if (usercode.value == "IMCESAdmin4429" || usercode.value == "IMatterCounseling216") {
+
+            return true;
+        }
+        else {
+            alert("Invalid user code please correct user code");
+            return false;
+            document.getElementById("lblerorusercodemsg").textContent = "Invalid user code please correct user code";
+            
+           
+        }
+        
+
+    }
+</script>
