@@ -78,6 +78,7 @@ namespace EmployeeManager2.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "IMCESAdmin4429")]
         public IActionResult Edit(int id)
         {
             var m = _context.Mileage.First(s => s.ID == id);
@@ -85,6 +86,7 @@ namespace EmployeeManager2.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "IMCESAdmin4429")]
         public IActionResult Edit(Mileage m)
         {
             if (!ModelState.IsValid)
@@ -100,6 +102,7 @@ namespace EmployeeManager2.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "IMCESAdmin4429")]
         public IActionResult Delete(int id)
         {
             var m = _context.Mileage.First(s => s.ID == id);
@@ -107,6 +110,7 @@ namespace EmployeeManager2.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "IMCESAdmin4429")]
         public IActionResult Delete(Mileage m)
         {
             

@@ -45,7 +45,6 @@ namespace EmployeeManager2.Controllers
                 Employee = _employeeRepository.GetEmployee(id),
                 PageTitle = "Employee Details"
             };
-
             return View(homeDetailsViewModel);
         }
 
@@ -54,8 +53,9 @@ namespace EmployeeManager2.Controllers
         {
             return View();
         }
-
+        
         [HttpGet]
+        [Authorize(Roles = "IMCESAdmin4429")]
         public ViewResult Edit(int id)
         {
             Employee employee = _employeeRepository.GetEmployee(id);
@@ -74,6 +74,7 @@ namespace EmployeeManager2.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "IMCESAdmin4429")]
         public ActionResult delete(int id)
         {
             if (id > 0 || !string.IsNullOrWhiteSpace(id.ToString()))
@@ -116,14 +117,13 @@ namespace EmployeeManager2.Controllers
             {
                 to = DateTime.Today.ToString("yyyy-MM-dd");
             }
-                if (!string.IsNullOrWhiteSpace(from))
+            if (!string.IsNullOrWhiteSpace(from))
             {
                 var model = _employeeRepository.SearchReceipt(from,to);
                 var total1 = _employeeRepository.SearchReceipt(from, to).Sum(s => s.ReceiptAmount);
 
                 ViewBag.total = total1.ToString();
                 return View("Index", model);
-
             }
             return RedirectToAction("Index");
         }
@@ -131,6 +131,7 @@ namespace EmployeeManager2.Controllers
         [HttpPost]
         public IActionResult Create(EmployeeCreateViewModel model)
         {
+           
             if (ModelState.IsValid)
             {
                 string uniqueFileName = null;
@@ -144,6 +145,7 @@ namespace EmployeeManager2.Controllers
                         photo.CopyTo(new FileStream(filePath, FileMode.Create));
                     }
                 }
+               
                 Employee newEmployee = new Employee
                 {
                     Name = model.Name,
@@ -161,6 +163,7 @@ namespace EmployeeManager2.Controllers
             return View();
         }
         [HttpPost]
+        [Authorize(Roles = "IMCESAdmin4429")]
         public IActionResult Edit(EmployeeCreateViewModel model)
         {
             

@@ -24,17 +24,20 @@ namespace EmployeeManager2.Areas.Identity.Pages.Account
         private readonly UserManager<AppUsers> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        
 
         public RegisterModel(
             UserManager<AppUsers> userManager,
             SignInManager<AppUsers> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            
         }
 
         [BindProperty]
@@ -61,6 +64,10 @@ namespace EmployeeManager2.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            [Required]
+            [Display(Name = "User Code")]
+            
+            public string usercode { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -68,15 +75,19 @@ namespace EmployeeManager2.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
+       
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             if (ModelState.IsValid)
             {
                 var user = new AppUsers { UserName = Input.Email, Email = Input.Email };
+               // await _userManager.AddToRoleAsync(user, Input.usercode);
                 var result = await _userManager.CreateAsync(user, Input.Password);
+               
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

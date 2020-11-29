@@ -77,6 +77,7 @@ namespace EmployeeManager2.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "IMCESAdmin4429")]
         public IActionResult Edit(int id)
         {
             var ts = _context.Timesheet.First(s => s.ID == id);
@@ -84,6 +85,7 @@ namespace EmployeeManager2.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "IMCESAdmin4429")]
         public IActionResult Edit(TimeSheet ts)
         {
             if (!ModelState.IsValid)
@@ -99,6 +101,7 @@ namespace EmployeeManager2.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "IMCESAdmin4429")]
         public IActionResult Delete(int id)
         {
             var ts = _context.Timesheet.First(s => s.ID == id);
@@ -106,6 +109,7 @@ namespace EmployeeManager2.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "IMCESAdmin4429")]
         public IActionResult Delete(TimeSheet ts)
         {
             
