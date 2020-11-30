@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EmployeeManager2.Data;
 using EmployeeManager2.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -57,12 +58,14 @@ namespace EmployeeManager2.Controllers
             return View(ts);
         }
         [HttpGet]
+        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public IActionResult Create(TimeSheet ts)
         {
             if (!ModelState.IsValid)
@@ -77,7 +80,7 @@ namespace EmployeeManager2.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "IMCESAdmin4429")]
+        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public IActionResult Edit(int id)
         {
             var ts = _context.Timesheet.First(s => s.ID == id);
@@ -85,7 +88,7 @@ namespace EmployeeManager2.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "IMCESAdmin4429")]
+        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public IActionResult Edit(TimeSheet ts)
         {
             if (!ModelState.IsValid)
@@ -101,7 +104,7 @@ namespace EmployeeManager2.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "IMCESAdmin4429")]
+        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public IActionResult Delete(int id)
         {
             var ts = _context.Timesheet.First(s => s.ID == id);
@@ -109,7 +112,7 @@ namespace EmployeeManager2.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "IMCESAdmin4429")]
+        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public IActionResult Delete(TimeSheet ts)
         {
             

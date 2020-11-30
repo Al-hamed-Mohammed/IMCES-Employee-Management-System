@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using EmployeeManager2.Data;
 
 namespace EmployeeManager2.Areas.Identity.Pages.Account
 {
@@ -24,20 +25,21 @@ namespace EmployeeManager2.Areas.Identity.Pages.Account
         private readonly UserManager<AppUsers> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<AppUsers> userManager,
             SignInManager<AppUsers> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager
             )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-            
+            _roleManager = roleManager; 
         }
 
         [BindProperty]
@@ -84,12 +86,43 @@ namespace EmployeeManager2.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
+                //User ROle create here if not exists
+                #region Create Roles
+                
+                if (!await _roleManager.RoleExistsAsync(UtilityClass.AdminUserRole))
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(UtilityClass.AdminUserRole));
+                }
+
+                if (!await _roleManager.RoleExistsAsync(UtilityClass.EmployeeUserRole))
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(UtilityClass.EmployeeUserRole));
+                }
+
+                #endregion
+                //end Code
+
+                if (Input.usercode != UtilityClass.AdminUserCode && Input.usercode != UtilityClass.EmployeeUserCode)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid User Code.");
+                    return Page();
+                }
+
                 var user = new AppUsers { UserName = Input.Email, Email = Input.Email };
                // await _userManager.AddToRoleAsync(user, Input.usercode);
                 var result = await _userManager.CreateAsync(user, Input.Password);
                
                 if (result.Succeeded)
                 {
+                    if(Input.usercode == UtilityClass.AdminUserCode)
+                    {
+                        await _userManager.AddToRoleAsync(user, UtilityClass.AdminUserRole);
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, UtilityClass.EmployeeUserRole);
+                    }
+                    
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

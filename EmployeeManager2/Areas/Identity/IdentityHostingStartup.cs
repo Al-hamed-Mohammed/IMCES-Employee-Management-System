@@ -21,7 +21,11 @@ namespace EmployeeManager2.Areas.Identity
                         context.Configuration.GetConnectionString("AuthDbContextConnection")));
 
                 services.AddDefaultIdentity<AppUsers>(options => options.SignIn.RequireConfirmedAccount = false)
-                    .AddEntityFrameworkStores<AuthDbContext>();
+                .AddRoles<IdentityRole>()
+                .AddRoleManager<RoleManager<IdentityRole>>()
+                .AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<AuthDbContext>();
+                    
             });
         }
     }
