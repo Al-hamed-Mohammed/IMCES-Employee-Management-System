@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EmployeeManager2.Data;
 using EmployeeManager2.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -59,12 +60,14 @@ namespace EmployeeManager2.Controllers
             return View(m);
         }
         [HttpGet]
+        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public IActionResult Create(Mileage m)
         {
             if (!ModelState.IsValid)
@@ -78,7 +81,7 @@ namespace EmployeeManager2.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "IMCESAdmin4429")]
+        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public IActionResult Edit(int id)
         {
             var m = _context.Mileage.First(s => s.ID == id);
@@ -86,7 +89,7 @@ namespace EmployeeManager2.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "IMCESAdmin4429")]
+        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public IActionResult Edit(Mileage m)
         {
             if (!ModelState.IsValid)
@@ -102,7 +105,7 @@ namespace EmployeeManager2.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "IMCESAdmin4429")]
+        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public IActionResult Delete(int id)
         {
             var m = _context.Mileage.First(s => s.ID == id);
@@ -110,7 +113,7 @@ namespace EmployeeManager2.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "IMCESAdmin4429")]
+        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public IActionResult Delete(Mileage m)
         {
             

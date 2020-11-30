@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
+using EmployeeManager2.Data;
 
 namespace EmployeeManager2.Controllers
 {
@@ -49,13 +50,14 @@ namespace EmployeeManager2.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public ViewResult Create()
         {
             return View();
         }
         
         [HttpGet]
-        [Authorize(Roles = "IMCESAdmin4429")]
+        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public ViewResult Edit(int id)
         {
             Employee employee = _employeeRepository.GetEmployee(id);
@@ -74,7 +76,7 @@ namespace EmployeeManager2.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "IMCESAdmin4429")]
+        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public ActionResult delete(int id)
         {
             if (id > 0 || !string.IsNullOrWhiteSpace(id.ToString()))
@@ -129,6 +131,7 @@ namespace EmployeeManager2.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public IActionResult Create(EmployeeCreateViewModel model)
         {
            
@@ -163,7 +166,7 @@ namespace EmployeeManager2.Controllers
             return View();
         }
         [HttpPost]
-        [Authorize(Roles = "IMCESAdmin4429")]
+        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public IActionResult Edit(EmployeeCreateViewModel model)
         {
             
