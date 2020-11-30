@@ -58,14 +58,12 @@ namespace EmployeeManager2.Controllers
             return View(ts);
         }
         [HttpGet]
-        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public IActionResult Create(TimeSheet ts)
         {
             if (!ModelState.IsValid)

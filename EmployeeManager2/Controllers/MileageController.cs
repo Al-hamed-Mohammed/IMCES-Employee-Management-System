@@ -60,14 +60,12 @@ namespace EmployeeManager2.Controllers
             return View(m);
         }
         [HttpGet]
-        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public IActionResult Create(Mileage m)
         {
             if (!ModelState.IsValid)
