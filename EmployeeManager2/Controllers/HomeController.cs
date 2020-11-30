@@ -50,6 +50,7 @@ namespace EmployeeManager2.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public ViewResult Create()
         {
             return View();
@@ -130,7 +131,7 @@ namespace EmployeeManager2.Controllers
         }
 
         [HttpPost]
-      
+        [Authorize(Roles = UtilityClass.AdminUserRole)]
         public IActionResult Create(EmployeeCreateViewModel model)
         {
            
